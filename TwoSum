@@ -1,0 +1,34 @@
+Given an array of integers, return indices of the two numbers such that they add up to a specific target.
+
+You may assume that each input would have exactly one solution, and you may not use the same element twice.
+
+class Solution {
+    func twoSum(_ nums: [Int], _ target: Int) -> [Int] {
+        
+        var i = 0
+        var j = 0
+        
+        if nums.isEmpty {
+          print("no values")
+            return []
+        }
+        
+        for i in 0...nums.count-1 {
+            for j in i+1...nums.count-1 {
+                var sum = nums[i] + nums[j]
+                if (sum == target) {
+                    return [i,j]
+                }
+            }
+        }
+        return []
+    }
+}
+
+
+
+Notes: 
+to get the array length - array.count
+to find empty array -  .isEmpty
+for loop range -  0...n-1
+if array length is n for loop should be from 0...n-1 because array length starts from 0.
