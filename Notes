@@ -1,5 +1,10 @@
 let arr = [1,2,3,4,5]
 let result = arr.filter {$0%2 == 0}// Filter example
 
-print("\(result)")
+print("\(result)") // [2, 4]
 
+
+let result1 = arr.map ({$0*2})
+print(result1) // [2, 4, 6, 8, 10]
+
+let result2 = arr.reduce()
