@@ -1,0 +1,12 @@
+ 
+var str = "Hello, playground"
+var countV = [Character: Int]()
+for char in str {
+    if let c = countV[char] {
+    countV[char] = c + 1
+    }else {
+       countV[char] = 1
+    }
+    let highestCount = countV.reduce(countV.first!) { ($1.1 > $0.1 ? $1: $0)}
+    print(highestCount)
+}
