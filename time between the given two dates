@@ -1,0 +1,167 @@
+
+// Question: All three functions together calculate the time between the given two dates
+struct Dates {
+    var year : Int
+    var month: Int
+    var day: Int
+    var min: Int
+    var sec: Int
+    var hours: Int
+}
+
+
+// calculates the seconds from jan 1 (given year) till the input date.
+func timeSince(input:Dates) -> Int? {
+
+    if (input.month > 12 || input.month < 1) {
+        return nil
+    }
+    
+    if (input.hours > 23 || input.hours < 0) {
+        return nil
+    }
+    
+    if (input.min > 59 || input.min < 0) {
+        return nil
+    }
+    
+    if (input.sec > 59 || input.sec < 0) {
+        return nil
+    }
+    
+    
+    var monthDays = [Int : Int]()
+    var secYear = [Int:Int]()
+    monthDays[01] = 31
+    if (input.year % 4 == 0) {
+    monthDays[02] = 29
+    }else {
+        monthDays[02] = 28
+    }
+    monthDays[03] = 31
+    monthDays[04] = 30
+    monthDays[05] = 31
+    monthDays[06] = 30
+    monthDays[07] = 31
+    monthDays[08] = 31
+    monthDays[09] = 30
+    monthDays[10] = 31
+    monthDays[11] = 30
+    monthDays[12] = 31
+    
+    let mcompleted = input.month - 1
+    var dcompleted = 0
+    var scompleted = 0
+    
+    for month in 1...mcompleted {
+            dcompleted += monthDays[month]!
+        }
+        scompleted = dcompleted * 24 * 60 * 60
+        dcompleted = input.day - 1
+        scompleted += dcompleted * 24 * 60 * 60
+        scompleted += input.hours * 60 * 60
+        scompleted += input.min * 60
+        scompleted += input.sec
+       
+    
+     return scompleted
+}
+   /*
+    let mCompleted = input.month - 1
+    var dCompleted = 0
+    var sCompleted = 0
+    
+    if (mCompleted != 0) {
+        for month in 1...mCompleted {
+            dCompleted += monthDays[month]!
+        }
+        sCompleted = dCompleted * 24 * 60 * 60
+    }
+    
+    dCompleted = input.day - 1
+    sCompleted += dCompleted * 24 * 60 * 60
+    sCompleted += input.hours * 60 * 60
+    sCompleted += input.min * 60
+    sCompleted += input.sec
+    return sCompleted
+}
+
+var start = Dates(year: 2020, month: 13, day: 1, min: 1, sec: 2, hours: 0)
+
+if let start1 = timeSince(input: start) {
+    print(start1)
+} else {
+    print("Not valid date")
+}
+*/
+
+//calculates time left in secs from input date to end of the year(Dec 31st)
+// 14:30:55 march 24
+func timeleft(input: Dates) -> Int {
+    var monthDays = [Int : Int]()
+    var daysLeft = 0
+    var secsLeft = 0
+    var hoursLeft = 0
+    var minLeft = 0
+    monthDays[01] = 31
+      if (input.year % 4 == 0) {
+      monthDays[02] = 29
+      }else {
+          monthDays[02] = 28
+      }
+      monthDays[03] = 31
+      monthDays[04] = 30
+      monthDays[05] = 31
+      monthDays[06] = 30
+      monthDays[07] = 31
+      monthDays[08] = 31
+      monthDays[09] = 30
+      monthDays[10] = 31
+      monthDays[11] = 30
+      monthDays[12] = 31
+      
+    for month in input.month + 1...12 {
+        daysLeft += monthDays[month]!
+    }
+    daysLeft = monthDays[input.month]! - (input.day+1)
+    secsLeft = daysLeft * 24 * 60 * 60
+    hoursLeft = 24 - (input.hours + 1)
+    secsLeft += hoursLeft * 60 * 60
+    minLeft = 60 - input.min
+    secsLeft += minLeft * 60
+    secsLeft += 60 - input.sec
+    return secsLeft
+}
+
+
+// time in secs between the start year and  endyear
+func secsInYears(startDate: Dates, endDate: Dates) -> Int {
+     var daysinYear = 0
+    for year in startDate.year...endDate.year {
+        if (year % 4 == 0){
+            daysinYear += 366
+        } else {
+            daysinYear += 365
+        }
+    }
+    
+    return daysinYear * 24 * 60 * 60
+}
+
+var endDate = Dates(year: 2001, month: 3, day: 4, min: 9, sec: 25, hours: 15)
+var startDate = Dates(year: 2000, month: 03, day: 4, min: 9, sec: 25, hours:14) // March 24th 1990, 14:30:55
+
+if (startDate.year == endDate.year) {
+    print(timeSince(input: endDate)! - timeSince(input: startDate)!)
+} else {
+    var start1 = timeleft(input: startDate) // 03-24-1990 to 01-01-1991
+    var start2 = 0
+    if (endDate.year - startDate.year > 1) {
+        start2 = secsInYears(startDate: Dates(year: startDate.year+1, month: 1, day: 1, min: 0, sec: 0, hours: 0), endDate: Dates(year: endDate.year - 1, month: 12, day: 31, min: 0, sec: 0, hours: 24))
+    }
+
+    var start3 = timeSince(input: endDate)
+    var totalTime = start1 + start2 + start3!
+
+    print (totalTime)
+}
