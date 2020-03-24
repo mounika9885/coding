@@ -1,0 +1,13 @@
+//print every second letter in  a string
+
+
+func printSecondLetter(input: string) -> string {
+  
+  var result: string = " "
+   for i in 0...input.count - 1 {
+     if (i %2 == 0) {
+        result += input[i]
+     }
+   }
+   print (result)
+}
