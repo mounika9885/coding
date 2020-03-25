@@ -10,3 +10,27 @@ for char in str {
     let highestCount = countV.reduce(countV.first!) { ($1.1 > $0.1 ? $1: $0)}
     print(highestCount)
 }
+
+
+
+// Different way without using reduce func
+// hareen
+func highestLetter(input: string) -> char {
+ var dict = [charcter: Int]()
+ for char in input {
+    if let count = dict[char] {
+     dict[char] = count+1
+    } else {
+     dict[char] = 1
+    }
+ }
+ var maxChar = ""
+ var maxVal = 0
+ 
+ for entry in dict {
+  if(entry.second > maxVal) {
+    maxVal =  entry.second
+    maxChar = entry.first
+  }
+ }
+}
